@@ -11,13 +11,13 @@ apply(from = "jacoco.gradle")
 apply(from = "upload.gradle")
 
 android {
-    compileSdk = VersionApp.compileSdkVersion
-    buildToolsVersion = VersionApp.buildToolsVersion
+    compileSdk = Versions.compileSdkVersion
+    buildToolsVersion = Versions.buildToolsVersion
 
     defaultConfig {
-        minSdk = VersionApp.minSdkVersion
-        targetSdk = VersionApp.targetSdkVersion
-        testInstrumentationRunner = VersionApp.testInstrumentationRunner
+        minSdk = Versions.minSdkVersion
+        targetSdk = Versions.targetSdkVersion
+        testInstrumentationRunner = Versions.testInstrumentationRunner
         consumerProguardFiles("consumer-rules.pro")
     }
 
@@ -57,13 +57,13 @@ android {
 
 dependencies {
     implementation(fileTree("libs") { include(listOf("*.jar", "*.aar")) })
-    implementation(MainApplicationDependencies.kotlinStdlib)
-    implementation(MainApplicationDependencies.coreKtx)
-    implementation(MainApplicationDependencies.appCompat)
-    implementation(MainApplicationDependencies.material)
-    implementation(MainApplicationDependencies.constraintLayout)
+    implementation(Deps.Jetpack.kotlin)
+    implementation(Deps.Jetpack.core)
+    implementation(Deps.Jetpack.appcompat)
+    implementation(Deps.UI.materialDesign)
+    implementation(Deps.UI.constraintLayout)
 
-    testImplementation(TestDependencies.junit)
-    androidTestImplementation(TestDependencies.extJUnit)
-    androidTestImplementation(TestDependencies.espressoCore)
+    testImplementation(Deps.Test.jUnit)
+    androidTestImplementation(Deps.Test.androidJUnit)
+    androidTestImplementation(Deps.Test.espresso)
 }

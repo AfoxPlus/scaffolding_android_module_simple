@@ -6,16 +6,16 @@ plugins {
 }
 
 android {
-    compileSdk = VersionApp.compileSdkVersion
-    buildToolsVersion = VersionApp.buildToolsVersion
+    compileSdk = Versions.compileSdkVersion
+    buildToolsVersion = Versions.buildToolsVersion
 
     defaultConfig {
-        applicationId = "com.hacybeyker.module.demo"
-        minSdk = VersionApp.minSdkVersion
-        targetSdk = VersionApp.targetSdkVersion
+        applicationId = "com.afoxplus.module.demo"
+        minSdk = Versions.minSdkVersion
+        targetSdk = Versions.targetSdkVersion
         versionCode = 1
         versionName = "1.0"
-        testInstrumentationRunner = VersionApp.testInstrumentationRunner
+        testInstrumentationRunner = Versions.testInstrumentationRunner
     }
 
     buildTypes {
@@ -46,15 +46,15 @@ android {
 
 dependencies {
     implementation(fileTree("libs") { include(listOf("*.jar", "*.aar")) })
-    implementation(MainApplicationDependencies.kotlinStdlib)
-    implementation(MainApplicationDependencies.coreKtx)
-    implementation(MainApplicationDependencies.appCompat)
-    implementation(MainApplicationDependencies.material)
-    implementation(MainApplicationDependencies.constraintLayout)
+    implementation(Deps.Jetpack.kotlin)
+    implementation(Deps.Jetpack.core)
+    implementation(Deps.Jetpack.appcompat)
+    implementation(Deps.UI.materialDesign)
+    implementation(Deps.UI.constraintLayout)
 
-    testImplementation(TestDependencies.junit)
-    androidTestImplementation(TestDependencies.extJUnit)
-    androidTestImplementation(TestDependencies.espressoCore)
+    testImplementation(Deps.Test.jUnit)
+    androidTestImplementation(Deps.Test.androidJUnit)
+    androidTestImplementation(Deps.Test.espresso)
 
     implementation(project(mapOf("path" to ":module")))
 }
