@@ -1,11 +1,9 @@
 name: Android Check
 
 on:
-  push:
+  pull_request:
     branches:
-      - '*'
-      - '!master'
-      - '!develop'
+      - 'develop'
 
 jobs:
   check:
