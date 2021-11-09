@@ -9,6 +9,9 @@ jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
+    env:
+      REPO_USERID: ${{ secrets.REPO_USERID }}
+      REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
     steps:
       - name: Checkout the code
         uses: actions/checkout@v2
@@ -32,6 +35,9 @@ jobs:
     name: Unit Test
     needs: [ lint ]
     runs-on: ubuntu-latest
+    env:
+      REPO_USERID: ${{ secrets.REPO_USERID }}
+      REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
     steps:
       - name: Checkout the code
         uses: actions/checkout@v2
@@ -43,12 +49,21 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Run tests
-        run: ./gradlew module:testDebug
+        run: ./gradlew module:testDebugUnitTest
+
+      - name: Upload test report
+        uses: actions/upload-artifact@v2
+        with:
+          name: unit_test_report
+          path: module/build/reports/tests/testDebugUnitTest/
 
   jacoco:
     name: Coverage Test
     needs: [ unit-test ]
     runs-on: ubuntu-latest
+    env:
+      REPO_USERID: ${{ secrets.REPO_USERID }}
+      REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
     steps:
       - name: Checkout the code
         uses: actions/checkout@v2
@@ -75,6 +90,9 @@ jobs:
     name: Analysis Code
     needs: [ jacoco ]
     runs-on: ubuntu-latest
+    env:
+      REPO_USERID: ${{ secrets.REPO_USERID }}
+      REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
     steps:
       - name: Checkout the code
         uses: actions/checkout@v2
@@ -89,6 +107,15 @@ jobs:
 
       - name: Make Gradle executable
         run: chmod +x ./gradlew
+
+      - name: Run lint
+        run: ./gradlew module:lintDebug
+
+      - name: Run tests
+        run: ./gradlew module:testDebugUnitTest
+
+      - name: Run Jacoco Test Report
+        run: ./gradlew module:jacocoTestReport
 
       - name: SonarCloud Scan
         run: ./gradlew module:sonarqube -Dsonar.host.url=https://sonarcloud.io/ -Dsonar.login=${{ secrets.SONARCLOUDTOKEN }}
@@ -116,43 +143,5 @@ jobs:
       - name: Make Gradle executable
         run: chmod +x ./gradlew
 
-      - name: Run lint
-        run: ./gradlew module:lintDebug
-
-      - name: Upload html test report
-        uses: actions/upload-artifact@v2
-        with:
-          name: lint_report
-          path: module/build/reports/lint-results-debug.html
-
-      - name: Run tests
-        run: ./gradlew module:testDebugUnitTest
-
-      - name: Upload test report
-        uses: actions/upload-artifact@v2
-        with:
-          name: unit_test_report
-          path: module/build/reports/tests/testDebugUnitTest/
-
-      - name: Run Jacoco Test Report
-        run: ./gradlew module:jacocoTestReport
-
-      - name: Upload coverage test report
-        uses: actions/upload-artifact@v2
-        with:
-          name: jacoco_test_report
-          path: module/build/reports/jacoco/jacocoTestReport/
-
-      - name: Run Jacoco Test Coverage Verification
-        run: ./gradlew module:jacocoTestCoverageVerification
-
-      - name: SonarCloud Scan
-        run: ./gradlew module:sonarqube -Dsonar.host.url=https://sonarcloud.io/ -Dsonar.login=${{ secrets.SONARCLOUDTOKEN }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Upload Artifact
-        env:
-          REPO_USERID: ${{ secrets.REPO_USERID }}
-          REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
-        run: ./gradlew module:publishDebugPublicationToGithubPackagesRepository
+        run: ./gradlew module:publishReleasePublicationToGithubPackagesRepository
