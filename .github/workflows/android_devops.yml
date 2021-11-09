@@ -124,6 +124,7 @@ jobs:
 
   artifact:
     name: Artifact
+    needs: [ sonarqube ]
     runs-on: ubuntu-latest
     env:
       REPO_USERID: ${{ secrets.REPO_USERID }}
