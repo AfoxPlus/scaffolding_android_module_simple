@@ -60,8 +60,19 @@ dependencies {
     implementation(Deps.Jetpack.kotlin)
     implementation(Deps.Jetpack.core)
     implementation(Deps.Jetpack.appcompat)
+
     implementation(Deps.UI.materialDesign)
     implementation(Deps.UI.constraintLayout)
+
+    implementation(Deps.Jetpack.activity)
+    implementation(Deps.Jetpack.fragment)
+
+    implementation(Deps.UI.materialDesign)
+    implementation(Deps.UI.constraintLayout)
+
+    implementation(Deps.Arch.coroutinesCore)
+    implementation(Deps.Arch.hiltAndroid)
+    kapt(Deps.Arch.hiltCompiler)
 
     testImplementation(Deps.Test.jUnit)
     androidTestImplementation(Deps.Test.androidJUnit)
