@@ -23,12 +23,11 @@ android {
 
     buildTypes {
         getByName("release") {
-            isMinifyEnabled = true
+            isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("String", "EXAMPLE_FIELD", "\"example-release\"")
         }
 
         getByName("debug") {
@@ -37,7 +36,6 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("String", "EXAMPLE_FIELD", "\"example-debug\"")
         }
     }
 
@@ -48,7 +46,10 @@ android {
 
     kotlinOptions.jvmTarget = JavaVersion.VERSION_11.toString()
 
-    buildFeatures { viewBinding = true }
+    buildFeatures {
+        viewBinding = true
+        dataBinding = true
+    }
 
     lint {
         isCheckDependencies = true
@@ -60,19 +61,19 @@ dependencies {
     implementation(Deps.Jetpack.kotlin)
     implementation(Deps.Jetpack.core)
     implementation(Deps.Jetpack.appcompat)
-
-    implementation(Deps.UI.materialDesign)
-    implementation(Deps.UI.constraintLayout)
-
     implementation(Deps.Jetpack.activity)
     implementation(Deps.Jetpack.fragment)
 
     implementation(Deps.UI.materialDesign)
     implementation(Deps.UI.constraintLayout)
+    implementation(Deps.UI.materialDesign)
+    implementation(Deps.UI.constraintLayout)
+    implementation(Deps.UI.uikit)
 
     implementation(Deps.Arch.coroutinesCore)
     implementation(Deps.Arch.hiltAndroid)
     kapt(Deps.Arch.hiltCompiler)
+    implementation(Deps.Arch.network)
 
     testImplementation(Deps.Test.jUnit)
     androidTestImplementation(Deps.Test.androidJUnit)

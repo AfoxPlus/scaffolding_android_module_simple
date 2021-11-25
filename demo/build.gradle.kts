@@ -38,7 +38,10 @@ android {
 
     kotlinOptions.jvmTarget = JavaVersion.VERSION_11.toString()
 
-    buildFeatures { viewBinding = true }
+    buildFeatures {
+        viewBinding = true
+        dataBinding = true
+    }
 
     lint {
         isCheckDependencies = true
