@@ -3,12 +3,15 @@ plugins {
     id("kotlin-android")
     id("kotlin-kapt")
     id("kotlin-parcelize")
-    id("maven-publish")
+    id("dagger.hilt.android.plugin")
 }
 
-apply(from = "sonarqube.gradle")
-apply(from = "jacoco.gradle")
-apply(from = "upload.gradle")
+apply {
+    from("sonarqube.gradle")
+    from("jacoco.gradle")
+    from("upload.gradle")
+}
+
 
 android {
     compileSdk = Versions.compileSdkVersion
@@ -19,6 +22,7 @@ android {
         targetSdk = Versions.targetSdkVersion
         testInstrumentationRunner = Versions.testInstrumentationRunner
         consumerProguardFiles("consumer-rules.pro")
+        renderscriptSupportModeEnabled = true
     }
 
     buildTypes {
@@ -28,6 +32,17 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", "EXAMPLE_FIELD", "\"example-release\"")
+        }
+
+        create("staging") {
+            initWith(getByName("debug"))
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            buildConfigField("String", "EXAMPLE_FIELD", "\"example-debug\"")
         }
 
         getByName("debug") {
@@ -36,6 +51,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", "EXAMPLE_FIELD", "\"example-debug\"")
         }
     }
 
@@ -52,7 +68,26 @@ android {
     }
 
     lint {
-        isCheckDependencies = true
+        disable.addAll(
+            listOf(
+                "TypographyFractions",
+                "TypographyQuotes",
+                "JvmStaticProvidesInObjectDetector",
+                "FieldSiteTargetOnQualifierAnnotation",
+                "ModuleCompanionObjects",
+                "ModuleCompanionObjectsNotInModuleParent"
+            )
+        )
+        checkDependencies = true
+        abortOnError = false
+        ignoreWarnings = false
+    }
+
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
     }
 }
 
@@ -75,6 +110,12 @@ dependencies {
     kapt(Deps.Arch.hiltCompiler)
     implementation(Deps.Arch.network)
 
+    // Chucker
+    debugImplementation(Deps.Arch.chucker)
+    "stagingImplementation"(Deps.Arch.chucker)
+    releaseImplementation(Deps.Arch.chuckerNoOp)
+
+    //Test
     testImplementation(Deps.Test.jUnit)
     androidTestImplementation(Deps.Test.androidJUnit)
     androidTestImplementation(Deps.Test.espresso)

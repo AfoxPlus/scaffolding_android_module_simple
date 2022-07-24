@@ -11,11 +11,11 @@ android {
     buildToolsVersion = Versions.buildToolsVersion
 
     defaultConfig {
-        applicationId = "com.afoxplus.module.demo"
+        applicationId = "${ConfigureApp.groupId}.${ConfigureApp.artifactId}"
         minSdk = Versions.minSdkVersion
         targetSdk = Versions.targetSdkVersion
         versionCode = 1
-        versionName = "1.0"
+        versionName = "1.0.0"
         testInstrumentationRunner = Versions.testInstrumentationRunner
     }
 
@@ -28,6 +28,33 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+        }
+
+        create("staging") {
+            initWith(getByName("debug"))
+            isDebuggable = true
+            isMinifyEnabled = false
+            isShrinkResources = false
+            applicationIdSuffix = ".staging"
+            versionNameSuffix = "-staging"
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            buildConfigField("String", "EXAMPLE_FIELD", "\"example-debug\"")
+        }
+
+        getByName("debug") {
+            isDebuggable = true
+            isMinifyEnabled = false
+            isShrinkResources = false
+            applicationIdSuffix = ".debug"
+            versionNameSuffix = "-debug"
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            buildConfigField("String", "EXAMPLE_FIELD", "\"example-debug\"")
         }
     }
 
@@ -44,7 +71,19 @@ android {
     }
 
     lint {
-        isCheckDependencies = true
+        disable.addAll(
+            listOf(
+                "TypographyFractions",
+                "TypographyQuotes",
+                "JvmStaticProvidesInObjectDetector",
+                "FieldSiteTargetOnQualifierAnnotation",
+                "ModuleCompanionObjects",
+                "ModuleCompanionObjectsNotInModuleParent"
+            )
+        )
+        checkDependencies = true
+        abortOnError = false
+        ignoreWarnings = false
     }
 }
 
@@ -63,6 +102,12 @@ dependencies {
     implementation(Deps.Arch.hiltAndroid)
     kapt(Deps.Arch.hiltCompiler)
 
+    // Chucker
+    debugImplementation(Deps.Arch.chucker)
+    "stagingImplementation"(Deps.Arch.chucker)
+    releaseImplementation(Deps.Arch.chuckerNoOp)
+
+    //Test
     testImplementation(Deps.Test.jUnit)
     androidTestImplementation(Deps.Test.androidJUnit)
     androidTestImplementation(Deps.Test.espresso)
