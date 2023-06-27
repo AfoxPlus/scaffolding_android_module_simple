@@ -1,0 +1,10 @@
+{
+  "uikit"         : false,
+  "network"       : false,
+  "auth"          : false,
+  "home"          : false,
+  "orders"        : false,
+  "products"      : false,
+  "restaurants"   : false,
+  "waiter"        : false
+}

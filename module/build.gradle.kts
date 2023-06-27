@@ -1,9 +1,11 @@
 plugins {
-    id("com.android.library")
-    id("kotlin-android")
-    id("kotlin-kapt")
-    id("kotlin-parcelize")
-    id("dagger.hilt.android.plugin")
+    id("com.android.library") version "7.3.1"
+    id("org.jetbrains.kotlin.android") version "1.7.20"
+    id("org.jetbrains.kotlin.kapt") version "1.7.20"
+    id("com.google.dagger.hilt.android") version "2.44.2"
+    id("org.jetbrains.kotlin.plugin.parcelize") version "1.7.20"
+    id("org.sonarqube") version "3.3"
+    id("jacoco")
 }
 
 apply {
@@ -12,10 +14,9 @@ apply {
     from("upload.gradle")
 }
 
-
 android {
+    namespace = "com.afoxplus.name_module"
     compileSdk = Versions.compileSdkVersion
-    buildToolsVersion = Versions.buildToolsVersion
 
     defaultConfig {
         minSdk = Versions.minSdkVersion
@@ -32,7 +33,6 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("String", "EXAMPLE_FIELD", "\"example-release\"")
         }
 
         create("staging") {
@@ -42,7 +42,6 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("String", "EXAMPLE_FIELD", "\"example-debug\"")
         }
 
         getByName("debug") {
@@ -51,7 +50,6 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("String", "EXAMPLE_FIELD", "\"example-debug\"")
         }
     }
 
@@ -98,25 +96,20 @@ dependencies {
     implementation(Deps.Jetpack.appcompat)
     implementation(Deps.Jetpack.activity)
     implementation(Deps.Jetpack.fragment)
-
     implementation(Deps.UI.materialDesign)
     implementation(Deps.UI.constraintLayout)
-    implementation(Deps.UI.materialDesign)
-    implementation(Deps.UI.constraintLayout)
-    implementation(Deps.UI.uikit)
-
     implementation(Deps.Arch.coroutinesCore)
     implementation(Deps.Arch.hiltAndroid)
     kapt(Deps.Arch.hiltCompiler)
+
+    //Business Dependencies
+    implementation(Deps.UI.uikit)
     implementation(Deps.Arch.network)
 
-    // Chucker
-    debugImplementation(Deps.Arch.chucker)
-    "stagingImplementation"(Deps.Arch.chucker)
-    releaseImplementation(Deps.Arch.chuckerNoOp)
-
-    //Test
     testImplementation(Deps.Test.jUnit)
+    testImplementation(Deps.Test.testCore)
+    testImplementation(Deps.Test.truth)
+    testImplementation(Deps.Test.mockitoKotlin)
     androidTestImplementation(Deps.Test.androidJUnit)
     androidTestImplementation(Deps.Test.espresso)
 }

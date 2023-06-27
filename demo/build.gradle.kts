@@ -1,14 +1,16 @@
 plugins {
-    id("com.android.application")
-    id("kotlin-android")
-    id("kotlin-kapt")
-    id("kotlin-parcelize")
-    id("dagger.hilt.android.plugin")
+    id("com.android.application") version "7.3.1"
+    id("org.jetbrains.kotlin.android") version "1.7.20"
+    id("org.jetbrains.kotlin.kapt") version "1.7.20"
+    id("com.google.dagger.hilt.android") version "2.44.2"
+    id("org.jetbrains.kotlin.plugin.parcelize") version "1.7.20"
+    id("org.sonarqube") version "3.3"
+    id("jacoco")
 }
 
 android {
+    namespace = "com.afoxplus.module.demo"
     compileSdk = Versions.compileSdkVersion
-    buildToolsVersion = Versions.buildToolsVersion
 
     defaultConfig {
         applicationId = "${ConfigureApp.groupId}.${ConfigureApp.artifactId}"
@@ -25,8 +27,7 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
             )
         }
 
@@ -41,7 +42,6 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("String", "EXAMPLE_FIELD", "\"example-debug\"")
         }
 
         getByName("debug") {
@@ -54,7 +54,6 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("String", "EXAMPLE_FIELD", "\"example-debug\"")
         }
     }
 
@@ -92,6 +91,7 @@ dependencies {
     implementation(Deps.Jetpack.kotlin)
     implementation(Deps.Jetpack.core)
     implementation(Deps.Jetpack.appcompat)
+
     implementation(Deps.Jetpack.activity)
     implementation(Deps.Jetpack.fragment)
 
@@ -102,15 +102,10 @@ dependencies {
     implementation(Deps.Arch.hiltAndroid)
     kapt(Deps.Arch.hiltCompiler)
 
-    // Chucker
-    debugImplementation(Deps.Arch.chucker)
-    "stagingImplementation"(Deps.Arch.chucker)
-    releaseImplementation(Deps.Arch.chuckerNoOp)
-
-    //Test
     testImplementation(Deps.Test.jUnit)
+    testImplementation(Deps.Test.testCore)
+    testImplementation(Deps.Test.truth)
+    testImplementation(Deps.Test.mockitoKotlin)
     androidTestImplementation(Deps.Test.androidJUnit)
     androidTestImplementation(Deps.Test.espresso)
-
-    implementation(project(mapOf("path" to ":module")))
 }

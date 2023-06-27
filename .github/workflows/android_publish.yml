@@ -1,73 +1,28 @@
 name: Android Publish
+run-name: Android Publish execute by @${{ github.actor }}
 
-on: [ workflow_dispatch ]
-  #TODO Change for this
-  #on:
-  #push:
-  #branches:
-#- 'master'
+on:
+  push:
+    branches:
+      - 'master'
 
 env:
   REPO_USERID: ${{ secrets.REPO_USERID }}
   REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
 
 jobs:
-  lint:
-    name: Lint
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-
-      - name: Configure Step
-        uses: ./.github/workflows/actions/configure
-
-      - name: Run Lint
-        uses: ./.github/workflows/actions/lint
-
-      - name: Upload Lint Test Report
-        uses: actions/upload-artifact@v2
-        with:
-          name: lint_report
-          path: module/build/reports/lint-results-debug.html
-
-      - name: Upload Detekt Report
-        uses: actions/upload-artifact@v2
-        with:
-          name: detekt_report
-          path: module/build/reports/detekt
-
-  code-analysis:
+  test:
     name: Code Analysis
-    needs: [ lint ]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Configure Step
-        uses: ./.github/workflows/actions/configure
+      - name: Setup Project
+        uses: ./.github/actions/android
 
       - name: Run Lint
-        uses: ./.github/workflows/actions/lint
-
-      - name: Run Tests
-        run: ./gradlew module:testDebugUnitTest
-
-      - name: Upload Test Report
-        uses: actions/upload-artifact@v2
-        with:
-          name: unit_test_report
-          path: module/build/reports/tests/testDebugUnitTest/
-
-      - name: Run Jacoco Test Report
-        run: ./gradlew module:jacocoTestReport
-
-      - name: Upload coverage test report
-        uses: actions/upload-artifact@v2
-        with:
-          name: jacoco_test_report
-          path: module/build/reports/jacoco/jacocoTestReport/
+        run: ./gradlew module:lintDebug
 
       - name: Run Jacoco Test Coverage Verification
         run: ./gradlew module:jacocoTestCoverageVerification
@@ -76,17 +31,15 @@ jobs:
         run: ./gradlew module:sonarqube -Dsonar.host.url=https://sonarcloud.io/ -Dsonar.login=${{ secrets.SONARCLOUDTOKEN }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
   tag:
     name: Tag
-    needs: [ code-analysis ]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Configure Step
-        uses: ./.github/workflows/actions/configure
+      - name: Setup Project
+        uses: ./.github/actions/android
 
       - name: Create Tag Release
         run: |
