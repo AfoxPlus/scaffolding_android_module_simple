@@ -52,7 +52,7 @@ find ../$FULL_PROJECT_NAME/ -type f \( -name "*.xml" \) -exec sed -i.bak "s/modu
 find ../$FULL_PROJECT_NAME/ -type f \( -name "ConfigureApp.kt" \) -exec sed -i.bak "s/module/$MODULE_NAME/g" {} \;
 find ../$FULL_PROJECT_NAME/ -type f \( -name "README.md" \) -exec sed -i.bak "s/module_name/$MODULE_NAME/g" {} \;
 find ../$FULL_PROJECT_NAME/ -type f \( -name "CHANGELOG.md" \) -exec sed -i.bak "s/module_name/$MODULE_NAME/g" {} \;
-find ../$FULL_PROJECT_NAME/ -type f \( -name "ExampleInstrumentedTest.kt" \) -exec sed -i.bak "s/module_name/$MODULE_NAME/g" {} \;
+find ../$FULL_PROJECT_NAME/ -type f \( -name "ExampleInstrumentedTest.kt" \) -exec sed -i.bak "s/module/$MODULE_NAME/g" {} \;
 echo "Done!"
 
 # Remove additional files
