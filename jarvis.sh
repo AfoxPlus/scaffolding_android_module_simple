@@ -52,7 +52,8 @@ echo "=================================================="
 # Rename app
 echo "Renaming app to $FULL_PROJECT_NAME"
 declare APPLICATION="${FULL_PROJECT_NAME}Application"
-find ../$FULL_PROJECT_NAME/ -type f \( -name "settings.gradle.kts" -or -name "*.xml" \) -exec sed -i.bak "s/module/$APPNAME/g" {} \;
+find ../$FULL_PROJECT_NAME/ -type f \( -name "settings.gradle.kts" -or -name "*.xml" \) -exec sed -i.bak "s/module/$MODULE_NAME/g" {} \;
+find ../$FULL_PROJECT_NAME/ -type f \( -name "README.md" \) -exec sed -i.bak "s/module/$MODULE_NAME/g" {} \;
 find ../$FULL_PROJECT_NAME/ -type f \( -name "ConfigureApp.kt" \) -exec sed -i.bak "s/com.afoxplus.module/$PACKAGE/g" {} \;
 find ../$FULL_PROJECT_NAME/ -name "MyApplication.kt" | sed "p;s/MyApplication/$APPLICATION/" | tr '\n' '\0' | xargs -0 -n 2 mv
 echo "Done!"
