@@ -44,8 +44,9 @@ echo "=================================================="
 
 # Gradle files
 echo "Renaming *.kts files"
-find ../$FULL_PROJECT_NAME/ -type f -name "*.kts" -exec sed -i.bak "s/com.afoxplus.module/$FUL_PACKAGE_NAME/g" {} \;
-find ../$FULL_PROJECT_NAME/ -type f -name "*.kts" -exec sed -i.bak "s/com.afoxplus.module.demo/${FUL_PACKAGE_NAME}.demo/g" {} \;
+#find ../$FULL_PROJECT_NAME/ -type f -name "*.kts" -exec sed -i.bak "s/com.afoxplus.module/$FUL_PACKAGE_NAME/g" {} \;
+#find ../$FULL_PROJECT_NAME/ -type f -name "*.kts" -exec sed -i.bak "s/com.afoxplus.module.demo/${FUL_PACKAGE_NAME}.demo/g" {} \;
+find ../$FULL_PROJECT_NAME/ -type f -name "*.kts" -exec sed -i.bak "s/module/$MODULE_NAME/g" {} \;
 echo "Done!"
 echo "=================================================="
 
