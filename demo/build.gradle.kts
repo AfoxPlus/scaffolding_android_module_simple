@@ -9,7 +9,7 @@ plugins {
 }
 
 android {
-    namespace = "com.afoxplus.module.demo"
+    namespace = "com.afoxplus.name_module.demo"
     compileSdk = Versions.compileSdkVersion
 
     defaultConfig {
@@ -88,6 +88,7 @@ android {
 
 dependencies {
     implementation(fileTree("libs") { include(listOf("*.jar", "*.aar")) })
+
     implementation(Deps.Jetpack.kotlin)
     implementation(Deps.Jetpack.core)
     implementation(Deps.Jetpack.appcompat)
@@ -108,4 +109,11 @@ dependencies {
     testImplementation(Deps.Test.mockitoKotlin)
     androidTestImplementation(Deps.Test.androidJUnit)
     androidTestImplementation(Deps.Test.espresso)
+
+    // Chucker
+    debugImplementation(Deps.Arch.chucker)
+    "stagingImplementation"(Deps.Arch.chucker)
+    releaseImplementation(Deps.Arch.chuckerNoOp)
+
+    implementation(project(mapOf("path" to ":module")))
 }
