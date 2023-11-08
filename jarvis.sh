@@ -1,17 +1,11 @@
 #!/bin/bash
 echo "Wellcome to Jarvis!"
 
-# package name
-echo "Insert your package name for project (Sample: com.afoxplus.orders): "
-read PACKAGE
+echo "Insert your name for modules (Examples: orders, products, analytics, etc): "
+read MODULE_NAME
 
-# project name
-echo "Insert your name for project (Sample: orders, products, analytics, etc): "
-#quedara asi: app-android-orders
-read APPNAME
-
-
-FULL_PROJECT_NAME="app-android-${APPNAME}"
+FULL_PROJECT_NAME="app-android-${MODULE_NAME}" ##APPNAME
+FUL_PACKAGE_NAME="com.afoxplus.${MODULE_NAME}" ##PACKAGE
 
 # Change folder main
 echo "Changing folder main project"
@@ -24,7 +18,7 @@ echo "=================================================="
 
 # Move folders
 echo "Moving folders to new path"
-SUBDIR=${PACKAGE//.//} # Replaces . with /
+SUBDIR=${FUL_PACKAGE_NAME//.//} # Replaces . with /
 echo "app name: $FULL_PROJECT_NAME"
 echo "$FULL_PROJECT_NAME/buildSrc/*"
 for n in $(find ../$FULL_PROJECT_NAME -not -path "*/buildSrc/*" -type d \( -path '*/src/androidTest' -or -path '*/src/main' -or -path '*/src/test' \) )
@@ -58,7 +52,7 @@ echo "=================================================="
 # Rename app
 echo "Renaming app to $FULL_PROJECT_NAME"
 declare APPLICATION="${FULL_PROJECT_NAME}Application"
-find ../$FULL_PROJECT_NAME/ -type f \( -name "settings.gradle.kts" -or -name "*.xml" \) -exec sed -i.bak "s/ThemeDemo/$APPNAME/g" {} \;
+find ../$FULL_PROJECT_NAME/ -type f \( -name "settings.gradle.kts" -or -name "*.xml" \) -exec sed -i.bak "s/module/$APPNAME/g" {} \;
 find ../$FULL_PROJECT_NAME/ -type f \( -name "ConfigureApp.kt" \) -exec sed -i.bak "s/com.afoxplus.module/$PACKAGE/g" {} \;
 find ../$FULL_PROJECT_NAME/ -name "MyApplication.kt" | sed "p;s/MyApplication/$APPLICATION/" | tr '\n' '\0' | xargs -0 -n 2 mv
 echo "Done!"
