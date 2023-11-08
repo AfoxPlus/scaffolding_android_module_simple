@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "Wellcome to Jarvis!"
 
-echo "Insert your name for modules (Examples: orders, products, analytics, etc): "
+echo "Insert your name for module (Examples: orders, products, analytics, etc): "
 read MODULE_NAME
 
 FULL_PROJECT_NAME="app-android-${MODULE_NAME}"
@@ -32,35 +32,28 @@ do
   echo "--------------------------------------------------"
 done
 echo "Done!"
-echo "=================================================="
 
-
-# Rename package and imports
-echo "Renaming packages to $FUL_PACKAGE_NAME"
+# Rename Package & Imports
+echo "Renaming packages & imports to $FUL_PACKAGE_NAME"
 find ../$FULL_PROJECT_NAME/ -type f -name "*.kt" -exec sed -i.bak "s/package com.afoxplus.module/package $FUL_PACKAGE_NAME/g" {} \;
 find ../$FULL_PROJECT_NAME/ -type f -name "*.kt" -exec sed -i.bak "s/import com.afoxplus.module.demo/import ${FUL_PACKAGE_NAME}.demo/g" {} \;
 echo "Done!"
-echo "=================================================="
 
-# Gradle files
-echo "Renaming *.kts files"
-#find ../$FULL_PROJECT_NAME/ -type f -name "*.kts" -exec sed -i.bak "s/com.afoxplus.module/$FUL_PACKAGE_NAME/g" {} \;
-#find ../$FULL_PROJECT_NAME/ -type f -name "*.kts" -exec sed -i.bak "s/com.afoxplus.module.demo/${FUL_PACKAGE_NAME}.demo/g" {} \;
-find ../$FULL_PROJECT_NAME/ -type f -name "*.kts" -exec sed -i.bak "s/module/$MODULE_NAME/g" {} \;
+# Rename Gradle files
+echo "Renaming gradle files to $FULL_PROJECT_NAME"
+find ../$FULL_PROJECT_NAME/ -type f -name "*.kts" -exec sed -i.bak "s/com.afoxplus.module/$FUL_PACKAGE_NAME/g" {} \;
+find ../$FULL_PROJECT_NAME/ -type f -name "*.kts" -exec sed -i.bak "s/com.afoxplus.module.demo/${FUL_PACKAGE_NAME}.demo/g" {} \;
 echo "Done!"
-echo "=================================================="
 
-# Rename app
-echo "Renaming app to $FULL_PROJECT_NAME"
+# Rename Classes
+echo "Renaming classes to $FULL_PROJECT_NAME"
 declare APPLICATION="${FULL_PROJECT_NAME}Application"
-#find ../$FULL_PROJECT_NAME/ -type f \( -name "settings.gradle.kts" -or -name "*.xml" \) -exec sed -i.bak "s/module/$MODULE_NAME/g" {} \;
 find ../$FULL_PROJECT_NAME/ -type f \( -name "*.xml" \) -exec sed -i.bak "s/module/$MODULE_NAME/g" {} \;
 find ../$FULL_PROJECT_NAME/ -type f \( -name "ConfigureApp.kt" \) -exec sed -i.bak "s/module/$MODULE_NAME/g" {} \;
 find ../$FULL_PROJECT_NAME/ -type f \( -name "README.md" \) -exec sed -i.bak "s/module_name/$MODULE_NAME/g" {} \;
 find ../$FULL_PROJECT_NAME/ -type f \( -name "CHANGELOG.md" \) -exec sed -i.bak "s/module_name/$MODULE_NAME/g" {} \;
-
+find ../$FULL_PROJECT_NAME/ -type f \( -name "ExampleInstrumentedTest.kt" \) -exec sed -i.bak "s/module_name/$MODULE_NAME/g" {} \;
 echo "Done!"
-echo "=================================================="
 
 # Remove additional files
 echo "Removing additional files"
@@ -72,7 +65,6 @@ rm -rf ../$FULL_PROJECT_NAME/jarvis.sh
 # Clean file .bak
 echo "Cleaning up"
 find ../$FULL_PROJECT_NAME/ -name "*.bak" -type f -delete
-echo "Done!"
-echo "=================================================="
-
+echo "Your project name is: ${FULL_PROJECT_NAME}"
+echo "Your package name is: ${FUL_PACKAGE_NAME}"
 echo "Done!"
