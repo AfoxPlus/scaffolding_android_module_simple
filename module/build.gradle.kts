@@ -15,7 +15,7 @@ apply {
 }
 
 android {
-    namespace = "com.afoxplus.name_module"
+    namespace = "com.afoxplus.module"
     compileSdk = Versions.compileSdkVersion
 
     defaultConfig {

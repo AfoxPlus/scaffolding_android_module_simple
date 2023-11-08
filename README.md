@@ -1,8 +1,8 @@
-# Welcome to app-android-[name_module]!
+# Welcome to app-android-module!
 
-![GithubActions](https://github.com/afoxplus/app-android-[name_module]/actions/workflows/android_publish.yml/badge.svg?branch=master) ![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=afoxplus-app-android-orders&metric=alert_status)
+![GithubActions](https://github.com/afoxplus/app-android-module/actions/workflows/android_publish.yml/badge.svg?branch=master) ![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=afoxplus-app-android-module&metric=alert_status)
 
-[name_module] is an library for [description_module]
+module is an library for [description_module]
 
 ## Setup
 
@@ -26,7 +26,7 @@ git submodule update
 
 ```kotlin  
 dependencies {  
-implementation("com.afoxplus.android:orders:$LAST_VERSION")
+implementation("com.afoxplus.android:module:$LAST_VERSION")
 }  
 ```  
 

@@ -9,7 +9,7 @@ plugins {
 }
 
 android {
-    namespace = "com.afoxplus.name_module.demo"
+    namespace = "com.afoxplus.module.demo"
     compileSdk = Versions.compileSdkVersion
 
     defaultConfig {
@@ -84,6 +84,10 @@ android {
         abortOnError = false
         ignoreWarnings = false
     }
+
+    hilt {
+        enableAggregatingTask = true
+    }
 }
 
 dependencies {
@@ -102,6 +106,10 @@ dependencies {
     implementation(Deps.Arch.coroutinesCore)
     implementation(Deps.Arch.hiltAndroid)
     kapt(Deps.Arch.hiltCompiler)
+
+    implementation(Deps.Arch.retrofit2)
+    implementation(Deps.Arch.gson)
+    implementation(Deps.Arch.loggingInterceptor)
 
     testImplementation(Deps.Test.jUnit)
     testImplementation(Deps.Test.testCore)
