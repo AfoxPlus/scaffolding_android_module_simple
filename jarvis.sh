@@ -8,13 +8,12 @@ FULL_PROJECT_NAME="app-android-${MODULE_NAME}"
 FUL_PACKAGE_NAME="com.afoxplus.${MODULE_NAME}"
 
 # Change folder main
-echo "Changing folder main project"
-mkdir ../$FULL_PROJECT_NAME
-mv ../scaffolding_android_module_simple/* ../scaffolding_android_module_simple/.[!.]* ../$FULL_PROJECT_NAME
-rm -rf ../scaffolding_android_module_simple
-echo "Done!"
-echo "=================================================="
-
+#echo "Changing folder main project"
+#mkdir ../$FULL_PROJECT_NAME
+#mv ../scaffolding_android_module_simple/* ../scaffolding_android_module_simple/.[!.]* ../$FULL_PROJECT_NAME
+#rm -rf ../scaffolding_android_module_simple
+#echo "Done!"
+#echo "=================================================="
 
 # Move folders
 echo "Moving folders to new path"
