@@ -12,7 +12,6 @@ Create gradle.properties file in the root of your user's .gradle:
  REPO_USERID_AFOXPLUS=****  
  REPO_TOKEN_AFOXPLUS=****  
  SONARCLOUDTOKEN=****   
- IS_LOCAL=true
  ```  
 
 Run the following git commands:

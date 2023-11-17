@@ -63,7 +63,7 @@ jobs:
 
       - name: Create Release Tag
         run: |
-          currentVersion=`grep version ./buildSrc/src/main/kotlin/ConfigureApp.kt | awk -F" " '{ print $5 }' `
+          currentVersion=`grep versionName ./buildSrc/src/main/kotlin/ConfigureApp.kt | awk -F" " '{ print $5 }' `
           versionFormatted=`echo $currentVersion | sed 's/.\(.*\)/\1/' | sed 's/\(.*\)./\1/'`
           echo "Version: $versionFormatted"
           git tag $versionFormatted
