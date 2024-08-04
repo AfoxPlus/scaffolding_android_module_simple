@@ -4,5 +4,5 @@ object ConfigureApp {
     const val artifactId = "module"
     const val versionName = "1.0.0"
     const val organization = "afoxplus"
-    const val projectName = "app-android-module"
+    const val projectName = "app-android-${artifactId}"
 }
