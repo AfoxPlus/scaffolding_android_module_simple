@@ -1,6 +1,6 @@
 # Welcome to app-android-module_name!
 
-![GithubActions](https://github.com/afoxplus/app-android-module_name/actions/workflows/android_publish.yml/badge.svg?branch=master) ![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=afoxplus-app-android-module_name&metric=alert_status)
+![GithubActions](https://github.com/afoxplus/app-android-module_name/actions/workflows/android_deploy.yml/badge.svg?branch=master) ![SonarCloud](https://sonarcloud.io/api/project_badges/measure?project=afoxplus-app-android-module_name&metric=alert_status)
 
 module_name is an library for afoxplus.
 
