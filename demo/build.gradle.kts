@@ -65,8 +65,6 @@ android {
     kotlinOptions.jvmTarget = JavaVersion.VERSION_17.toString()
 
     buildFeatures {
-        viewBinding = true
-        dataBinding = true
         compose = true
     }
 
@@ -97,9 +95,14 @@ android {
 
 dependencies {
     implementation(fileTree("libs") { include(listOf("*.jar", "*.aar")) })
+
     implementation(Deps.Jetpack.kotlin)
     implementation(Deps.Jetpack.core)
     implementation(Deps.Jetpack.appcompat)
+    implementation(Deps.Jetpack.activity)
+    implementation(Deps.Jetpack.fragment)
+
+    //UI
     implementation(Deps.UI.materialDesign)
     implementation(Deps.UI.constraintLayout)
 
@@ -113,6 +116,9 @@ dependencies {
     implementation(Deps.JetpackCompose.toolingPreview)
     implementation(Deps.JetpackCompose.material3)
     implementation(Deps.JetpackCompose.materialIconExtended)
+    implementation(Deps.JetpackCompose.tooling)
+    implementation(Deps.JetpackCompose.coilCompose)
+    implementation(Deps.JetpackCompose.hiltNavigationCompose)
 
     // External Libraries
     implementation(Deps.Arch.hiltAndroid)
