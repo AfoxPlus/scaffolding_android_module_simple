@@ -66,6 +66,7 @@ android {
 
     buildFeatures {
         compose = true
+        viewBinding = true
     }
 
     composeOptions {
@@ -140,6 +141,11 @@ dependencies {
     debugImplementation(Deps.Arch.chucker)
     "stagingImplementation"(Deps.Arch.chucker)
     releaseImplementation(Deps.Arch.chuckerNoOp)
+
+    // Business Dependencies
+    implementation(Deps.UI.uikit)
+    implementation(Deps.Arch.network)
+    implementation(Deps.Arch.demo_config)
 
     implementation(project(mapOf("path" to ":module")))
 }
