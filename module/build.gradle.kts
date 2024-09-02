@@ -1,9 +1,9 @@
 plugins {
-    id("com.android.library") version "8.0.2"
-    id("org.jetbrains.kotlin.android") version "1.8.22"
-    id("org.jetbrains.kotlin.kapt") version "1.8.22"
-    id("com.google.dagger.hilt.android") version "2.44.2"
-    id("org.jetbrains.kotlin.plugin.parcelize") version "1.7.20"
+    id("com.android.library")
+    id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.kapt")
+    id("com.google.dagger.hilt.android")
+    id("org.jetbrains.kotlin.plugin.parcelize")
     id("org.sonarqube") version "3.3"
     id("jacoco")
 }
@@ -66,7 +66,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.8"
+        kotlinCompilerExtensionVersion = Versions.kotlinCompilerExtensionVersion
     }
 
     lint {
@@ -98,19 +98,17 @@ android {
 }
 
 dependencies {
-    implementation(fileTree("libs") { include(listOf("*.jar", "*.aar")) })
-
+    //Jetpack
     implementation(Deps.Jetpack.kotlin)
     implementation(Deps.Jetpack.core)
     implementation(Deps.Jetpack.appcompat)
-    implementation(Deps.Jetpack.activity)
     implementation(Deps.Jetpack.fragment)
 
-    //UI
+    //Jetpack UI
     implementation(Deps.UI.materialDesign)
     implementation(Deps.UI.constraintLayout)
 
-    // JetpackCompose
+    // Jetpack Compose
     implementation(Deps.JetpackCompose.activity)
     implementation(Deps.JetpackCompose.constraintlayout)
     implementation(Deps.JetpackCompose.navigation)
@@ -118,26 +116,46 @@ dependencies {
     implementation(Deps.JetpackCompose.ui)
     implementation(Deps.JetpackCompose.graphics)
     implementation(Deps.JetpackCompose.toolingPreview)
+    debugImplementation(Deps.JetpackCompose.tooling)
     implementation(Deps.JetpackCompose.material3)
     implementation(Deps.JetpackCompose.materialIconExtended)
-    implementation(Deps.JetpackCompose.tooling)
+    //Image Async
     implementation(Deps.JetpackCompose.coilCompose)
-    implementation(Deps.JetpackCompose.hiltNavigationCompose)
+    implementation(Deps.UI.glide)
+    kapt(Deps.UI.glideCompiler)
 
-    // External Libraries
-    implementation(Deps.Arch.hiltAndroid)
-    kapt(Deps.Arch.hiltCompiler)
+    // Coroutines
     implementation(Deps.Arch.coroutinesCore)
+    implementation(Deps.Arch.coroutinesAndroid)
 
-    // Business Dependencies
-    implementation(Deps.UI.uikit)
-    implementation(Deps.Arch.network)
+    //Lifecycle Scope
+    implementation(Deps.Arch.lifecycleRuntime)
+    implementation(Deps.Arch.lifecycleViewModel)
+    implementation(Deps.Arch.lifecycleCompose)
+    implementation(Deps.Arch.lifecycleRuntimeCompose)
+
+    // Dagger - Hilt
+    implementation(Deps.Arch.hiltAndroid)
+    kapt(Deps.Arch.hiltAndroidCompiler)
+    implementation(Deps.JetpackCompose.hiltNavigationCompose)
+    kapt(Deps.Arch.hiltCompiler)
+
+    //Retrofit
+    implementation(Deps.Arch.retrofit2)
+    implementation(Deps.Arch.gson)
+    implementation(Deps.Arch.loggingInterceptor)
 
     // Test
     testImplementation(Deps.Test.jUnit)
     testImplementation(Deps.Test.testCore)
     testImplementation(Deps.Test.truth)
     testImplementation(Deps.Test.mockitoKotlin)
+    testImplementation(Deps.Test.kotlinCoroutine)
+    testImplementation(Deps.Test.mockitoInline)
     androidTestImplementation(Deps.Test.androidJUnit)
     androidTestImplementation(Deps.Test.espresso)
+
+    // Business Dependencies
+    implementation(Deps.UI.uikit)
+    implementation(Deps.Arch.network)
 }
